@@ -1,0 +1,39 @@
+server {
+    listen 3000;
+
+    # Web panel — must match XUI_INIT_WEB_BASE_PATH in the Dockerfile
+    location /managepanel/ {
+        proxy_pass http://127.0.0.1:2053/managepanel/;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    # Subscription link — must match Sub Port / Sub Path in
+    # Panel Settings → Subscription Settings. Defaults assumed here:
+    # port 2096, path /sub/. Change both the port below and the path
+    # in this block if your panel settings differ.
+    location /sub/ {
+        proxy_pass http://127.0.0.1:2096/sub/;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    # Inbounds — 3x-ui lets you create WebSocket inbounds on ports 8080-8089.
+    # Each one gets its own path here so nginx can route it under the
+    # single Railway port (3000). Build the inbound in the panel with the
+    # matching port + path pair below.
+    location /in0 { proxy_pass http://127.0.0.1:8080; proxy_http_version 1.1; proxy_set_header Upgrade $http_upgrade; proxy_set_header Connection "upgrade"; proxy_set_header Host $host; proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; }
+    location /in1 { proxy_pass http://127.0.0.1:8081; proxy_http_version 1.1; proxy_set_header Upgrade $http_upgrade; proxy_set_header Connection "upgrade"; proxy_set_header Host $host; proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; }
+    location /in2 { proxy_pass http://127.0.0.1:8082; proxy_http_version 1.1; proxy_set_header Upgrade $http_upgrade; proxy_set_header Connection "upgrade"; proxy_set_header Host $host; proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; }
+    location /in3 { proxy_pass http://127.0.0.1:8083; proxy_http_version 1.1; proxy_set_header Upgrade $http_upgrade; proxy_set_header Connection "upgrade"; proxy_set_header Host $host; proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; }
+    location /in4 { proxy_pass http://127.0.0.1:8084; proxy_http_version 1.1; proxy_set_header Upgrade $http_upgrade; proxy_set_header Connection "upgrade"; proxy_set_header Host $host; proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; }
+    location /in5 { proxy_pass http://127.0.0.1:8085; proxy_http_version 1.1; proxy_set_header Upgrade $http_upgrade; proxy_set_header Connection "upgrade"; proxy_set_header Host $host; proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; }
+    location /in6 { proxy_pass http://127.0.0.1:8086; proxy_http_version 1.1; proxy_set_header Upgrade $http_upgrade; proxy_set_header Connection "upgrade"; proxy_set_header Host $host; proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; }
+    location /in7 { proxy_pass http://127.0.0.1:8087; proxy_http_version 1.1; proxy_set_header Upgrade $http_upgrade; proxy_set_header Connection "upgrade"; proxy_set_header Host $host; proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; }
+    location /in8 { proxy_pass http://127.0.0.1:8088; proxy_http_version 1.1; proxy_set_header Upgrade $http_upgrade; proxy_set_header Connection "upgrade"; proxy_set_header Host $host; proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; }
+    location /in9 { proxy_pass http://127.0.0.1:8089; proxy_http_version 1.1; proxy_set_header Upgrade $http_upgrade; proxy_set_header Connection "upgrade"; proxy_set_header Host $host; proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; }
+}
